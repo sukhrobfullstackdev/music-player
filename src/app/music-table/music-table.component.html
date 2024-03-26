@@ -1,0 +1,34 @@
+<mat-table [dataSource]="dataSource">
+
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Название</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="filename">
+    <mat-header-cell *matHeaderCellDef> Имя файла</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.filename}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+
+</mat-table>
+
+<div class="audio-player" [ngStyle]="{'display': selectedRow ? 'flex' : 'none'}">
+  <audio #audioPlayer hidden>
+    <source [src]="selectedRow ? 'assets/' + selectedRow.filename + '.mp3' : ''" type="audio/mp3">
+    Ваш браузер не поддерживает аудио элемент.
+  </audio>
+  <button (click)="playAudio()">Играть</button>
+  {{selectedRow?.name}}
+  <button (click)="pauseAudio()">Пауза</button>
+</div>
+
+
+
